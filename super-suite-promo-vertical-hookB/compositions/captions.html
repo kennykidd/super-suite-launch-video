@@ -1,0 +1,239 @@
+<template id="captions-template" data-composition-id="captions" data-width="1080" data-height="1920">
+<script src="assets/vendor/gsap.min.js"></script>
+
+
+<style data-brand-tokens>
+      @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/space-grotesk-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/space-grotesk-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Inter'; src: url('assets/fonts/inter-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Inter'; src: url('assets/fonts/inter-latin-600-normal.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Inter'; src: url('assets/fonts/inter-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Inter'; src: url('assets/fonts/inter-latin-900-normal.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: block; }
+      :root {
+      --bg: #060B1E;
+      --primary: #2EA8FF;
+      --text: #FFFFFF;
+      --text-muted: #B9C6E4;
+      --text-light: #6E7DA3;
+      --cta: #7B3FF2;
+      --cta-glow: rgba(123, 63, 242, 0.45);
+      --surface: #0E1A3A;
+      --sys-leads: #2E8BFF;
+      --sys-receptionist: #22C55E;
+      --sys-reputation: #8B5CF6;
+      --sys-social: #F97316;
+      --sys-website: #38BDF8;
+      --star: #FBBF24;
+      --brand-gold: #C9A227;
+      --accent-light: rgba(46, 168, 255, 0.08);
+      --accent-medium: rgba(46, 168, 255, 0.15);
+      --border: rgba(46, 168, 255, 0.2);
+      --card-bg: rgba(46, 168, 255, 0.07);
+      --positive: #059669;
+      --negative: #dc2626;
+      --cap-ink: #FFFFFF;
+      --cap-canvas: #060B1E;
+      --cap-accent: #F97316;
+      --cap-accent-2: #FBBF24;
+      --font-display: "Space Grotesk", system-ui, serif;
+      --font-body: "Inter", system-ui, sans-serif;
+      --cap-band-top: 1600px;
+      --cap-band-height: 320px;
+      }
+    </style>
+
+<style>
+  #captions-root {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .caption-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+  /* the keep-out band, from captionBand(H) — frame content stays above it */
+  .caption-stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--cap-band-top, 900px);
+    height: var(--cap-band-height, 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .caption-group {
+    /* every group is absolutely stacked over the SAME band — exactly one shown at a
+       time via opacity. Must be absolute: in-flow groups would lay out side-by-side. */
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  /* THE tinted card — 4% cobalt fill, 1.5px 20%-cobalt border, soft 14px corners,
+     NO shadow (the tinted card does the lift; cast depth is forbidden) */
+  .caption-pill {
+    max-width: 78%;
+    padding: 20px 44px 24px;
+    background: color-mix(in srgb, var(--cap-accent, #1e2bfa) 4%, var(--cap-canvas, #fdfae7));
+    border: 1.5px solid color-mix(in srgb, var(--cap-accent, #1e2bfa) 20%, transparent);
+    border-radius: 14px;
+  }
+  .caption-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.1em 0.34em;
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(40px, 4.4vw, 58px);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+  }
+
+  /* upcoming — muted gray, no chip */
+  .caption-word {
+    display: inline-block;
+    padding: 0 0.18em;
+    border-radius: 0.32em;
+    color: color-mix(in srgb, var(--cap-ink, #111111) 52%, var(--cap-canvas, #fdfae7));
+  }
+  /* current word — THE solid cobalt chip (the single-accent gesture; pill-rounded
+     fill, NO shadow), cream reading on top */
+  .caption-word.is-active {
+    color: var(--cap-canvas, #fdfae7);
+    background: var(--cap-accent, #1e2bfa);
+    box-shadow: none;
+  }
+  /* already spoken — solid near-black ink, chip cleared */
+  .caption-word.is-spoken {
+    color: var(--cap-ink, #111111);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* optional per-word accents (dormant until a word-classer tags them) */
+  /* brand / key term — cobalt, the system's one accent on a key word */
+  .caption-word.cap-brand {
+    color: var(--cap-accent, #1e2bfa);
+  }
+  /* numerals / data — cobalt 700, the figure voice */
+  .caption-word.cap-num {
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-weight: 700;
+    color: var(--cap-accent, #1e2bfa);
+  }
+  /* emphasis — a directional-red hairline underline (inline only, never a fill) */
+  .caption-word.cap-cta {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--cap-accent-2, #dc2626);
+    text-underline-offset: 0.1em;
+  }
+
+  @media (max-aspect-ratio: 9/16) {
+    .caption-pill {
+      max-width: 92%;
+    }
+    .caption-line {
+      font-size: clamp(34px, 5.4vw, 48px);
+    }
+  }
+</style>
+
+<div
+  id="captions-root"
+  data-composition-id="captions"
+  data-timeline-locked
+  data-start="0"
+  data-duration="59.65"
+  data-fps="30"
+  data-width="1080"
+  data-height="1920"
+>
+  <div class="caption-layer" aria-hidden="true">
+    <div id="caption-stage" class="caption-stage"></div>
+  </div>
+</div>
+
+<script>
+  // captions.mjs injects the engine's scene-aware groups + real duration here.
+  var GROUPS = [{"id":"caption-group-0","frame":1,"start":0,"end":0.88,"text":"Right now,","words":[{"id":"caption-word-0-0","text":"Right","start":0,"end":0.4},{"id":"caption-word-0-1","text":"now,","start":0.48,"end":0.8}]},{"id":"caption-group-1","frame":1,"start":0.88,"end":1.52,"text":"someone near","words":[{"id":"caption-word-1-0","text":"someone","start":0.88,"end":1.2},{"id":"caption-word-1-1","text":"near","start":1.32,"end":1.44}]},{"id":"caption-group-2","frame":1,"start":1.52,"end":1.84,"text":"you is","words":[{"id":"caption-word-2-0","text":"you","start":1.52,"end":1.6},{"id":"caption-word-2-1","text":"is","start":1.68,"end":1.76}]},{"id":"caption-group-3","frame":1,"start":1.84,"end":3.2,"text":"searching for exactly","words":[{"id":"caption-word-3-0","text":"searching","start":1.84,"end":2.24},{"id":"caption-word-3-1","text":"for","start":2.32,"end":2.4},{"id":"caption-word-3-2","text":"exactly","start":2.48,"end":3.12}]},{"id":"caption-group-4","frame":1,"start":3.2,"end":4.08,"text":"what you do.","words":[{"id":"caption-word-4-0","text":"what","start":3.2,"end":3.36},{"id":"caption-word-4-1","text":"you","start":3.44,"end":3.52},{"id":"caption-word-4-2","text":"do.","start":3.6,"end":3.96}]},{"id":"caption-group-5","frame":1,"start":4.88,"end":5.32,"text":"Will they","words":[{"id":"caption-word-5-0","text":"Will","start":4.88,"end":4.96},{"id":"caption-word-5-1","text":"they","start":5.04,"end":5.2}]},{"id":"caption-group-6","frame":1,"start":5.36,"end":6.4,"text":"find you...","words":[{"id":"caption-word-6-0","text":"find","start":5.36,"end":5.52},{"id":"caption-word-6-1","text":"you...","start":5.6,"end":6.28}]},{"id":"caption-group-7","frame":1,"start":6.72,"end":8.04,"text":"or your competitor?","words":[{"id":"caption-word-7-0","text":"or","start":6.72,"end":6.88},{"id":"caption-word-7-1","text":"your","start":6.96,"end":7.04},{"id":"caption-word-7-2","text":"competitor?","start":7.12,"end":7.92}]},{"id":"caption-group-8","frame":2,"start":8.39,"end":9.43,"text":"Meet your A.I.","words":[{"id":"caption-word-8-0","text":"Meet","start":8.39,"end":8.63},{"id":"caption-word-8-1","text":"your","start":8.71,"end":8.87},{"id":"caption-word-8-2","text":"A.I.","start":9.03,"end":9.35}]},{"id":"caption-group-9","frame":2,"start":9.43,"end":11.79,"text":"Client Acquisition Super Suite.","words":[{"id":"caption-word-9-0","text":"Client","start":9.43,"end":9.75},{"id":"caption-word-9-1","text":"Acquisition","start":9.91,"end":10.55},{"id":"caption-word-9-2","text":"Super","start":10.71,"end":10.95},{"id":"caption-word-9-3","text":"Suite.","start":11.03,"end":11.67}]},{"id":"caption-group-10","frame":2,"start":11.91,"end":13.07,"text":"Five systems built","words":[{"id":"caption-word-10-0","text":"Five","start":11.91,"end":12.15},{"id":"caption-word-10-1","text":"systems","start":12.31,"end":12.71},{"id":"caption-word-10-2","text":"built","start":12.79,"end":13.03}]},{"id":"caption-group-11","frame":2,"start":13.07,"end":13.43,"text":"to help","words":[{"id":"caption-word-11-0","text":"to","start":13.07,"end":13.11},{"id":"caption-word-11-1","text":"help","start":13.19,"end":13.35}]},{"id":"caption-group-12","frame":2,"start":13.43,"end":14.31,"text":"you attract,","words":[{"id":"caption-word-12-0","text":"you","start":13.43,"end":13.47},{"id":"caption-word-12-1","text":"attract,","start":13.51,"end":14.19}]},{"id":"caption-group-13","frame":2,"start":14.31,"end":15.55,"text":"convert and keep","words":[{"id":"caption-word-13-0","text":"convert","start":14.31,"end":14.87},{"id":"caption-word-13-1","text":"and","start":14.95,"end":15.11},{"id":"caption-word-13-2","text":"keep","start":15.19,"end":15.43}]},{"id":"caption-group-14","frame":2,"start":15.55,"end":16.75,"text":"more customers.","words":[{"id":"caption-word-14-0","text":"more","start":15.55,"end":15.67},{"id":"caption-word-14-1","text":"customers.","start":15.75,"end":16.63}]},{"id":"caption-group-15","frame":3,"start":16.87,"end":18.15,"text":"Lead Generation reaches","words":[{"id":"caption-word-15-0","text":"Lead","start":16.87,"end":17.03},{"id":"caption-word-15-1","text":"Generation","start":17.11,"end":17.67},{"id":"caption-word-15-2","text":"reaches","start":17.75,"end":18.07}]},{"id":"caption-group-16","frame":3,"start":18.15,"end":18.55,"text":"out for","words":[{"id":"caption-word-16-0","text":"out","start":18.15,"end":18.31},{"id":"caption-word-16-1","text":"for","start":18.39,"end":18.47}]},{"id":"caption-group-17","frame":3,"start":18.55,"end":19.03,"text":"you,","words":[{"id":"caption-word-17-0","text":"you,","start":18.55,"end":18.91}]},{"id":"caption-group-18","frame":3,"start":19.11,"end":19.67,"text":"and fills","words":[{"id":"caption-word-18-0","text":"and","start":19.11,"end":19.27},{"id":"caption-word-18-1","text":"fills","start":19.35,"end":19.59}]},{"id":"caption-group-19","frame":3,"start":19.67,"end":20.39,"text":"your pipeline","words":[{"id":"caption-word-19-0","text":"your","start":19.67,"end":19.75},{"id":"caption-word-19-1","text":"pipeline","start":19.83,"end":20.31}]},{"id":"caption-group-20","frame":3,"start":20.39,"end":22.31,"text":"with qualified prospects.","words":[{"id":"caption-word-20-0","text":"with","start":20.39,"end":20.47},{"id":"caption-word-20-1","text":"qualified","start":20.55,"end":21.11},{"id":"caption-word-20-2","text":"prospects.","start":21.19,"end":22.19}]},{"id":"caption-group-21","frame":4,"start":22.47,"end":23.91,"text":"Your AI Receptionist","words":[{"id":"caption-word-21-0","text":"Your","start":22.47,"end":22.63},{"id":"caption-word-21-1","text":"AI","start":22.79,"end":23.03},{"id":"caption-word-21-2","text":"Receptionist","start":23.11,"end":23.83}]},{"id":"caption-group-22","frame":4,"start":23.91,"end":25.27,"text":"answers every call,","words":[{"id":"caption-word-22-0","text":"answers","start":23.91,"end":24.31},{"id":"caption-word-22-1","text":"every","start":24.39,"end":24.63},{"id":"caption-word-22-2","text":"call,","start":24.71,"end":25.15}]},{"id":"caption-group-23","frame":4,"start":25.27,"end":26.31,"text":"day or night,","words":[{"id":"caption-word-23-0","text":"day","start":25.27,"end":25.43},{"id":"caption-word-23-1","text":"or","start":25.51,"end":25.59},{"id":"caption-word-23-2","text":"night,","start":25.67,"end":26.19}]},{"id":"caption-group-24","frame":4,"start":26.39,"end":27.59,"text":"handles questions,","words":[{"id":"caption-word-24-0","text":"handles","start":26.39,"end":26.79},{"id":"caption-word-24-1","text":"questions,","start":26.87,"end":27.51}]},{"id":"caption-group-25","frame":4,"start":27.59,"end":28.11,"text":"and books","words":[{"id":"caption-word-25-0","text":"and","start":27.59,"end":27.75},{"id":"caption-word-25-1","text":"books","start":27.83,"end":28.07}]},{"id":"caption-group-26","frame":4,"start":28.11,"end":29.23,"text":"the appointment.","words":[{"id":"caption-word-26-0","text":"the","start":28.11,"end":28.15},{"id":"caption-word-26-1","text":"appointment.","start":28.23,"end":29.11}]},{"id":"caption-group-27","frame":5,"start":29.35,"end":31.11,"text":"Reputation Management brings in","words":[{"id":"caption-word-27-0","text":"Reputation","start":29.35,"end":29.99},{"id":"caption-word-27-1","text":"Management","start":30.07,"end":30.55},{"id":"caption-word-27-2","text":"brings","start":30.63,"end":30.87},{"id":"caption-word-27-3","text":"in","start":30.95,"end":31.03}]},{"id":"caption-group-28","frame":5,"start":31.11,"end":32.91,"text":"more five-star reviews,","words":[{"id":"caption-word-28-0","text":"more","start":31.11,"end":31.35},{"id":"caption-word-28-1","text":"five-star","start":31.43,"end":31.91},{"id":"caption-word-28-2","text":"reviews,","start":31.99,"end":32.79}]},{"id":"caption-group-29","frame":5,"start":32.95,"end":34.07,"text":"and routes complaints","words":[{"id":"caption-word-29-0","text":"and","start":32.95,"end":33.03},{"id":"caption-word-29-1","text":"routes","start":33.11,"end":33.43},{"id":"caption-word-29-2","text":"complaints","start":33.55,"end":33.99}]},{"id":"caption-group-30","frame":5,"start":34.07,"end":34.47,"text":"to you","words":[{"id":"caption-word-30-0","text":"to","start":34.07,"end":34.15},{"id":"caption-word-30-1","text":"you","start":34.23,"end":34.39}]},{"id":"caption-group-31","frame":5,"start":34.47,"end":35.03,"text":"before they","words":[{"id":"caption-word-31-0","text":"before","start":34.47,"end":34.79},{"id":"caption-word-31-1","text":"they","start":34.87,"end":34.95}]},{"id":"caption-group-32","frame":5,"start":35.03,"end":36.35,"text":"become problems.","words":[{"id":"caption-word-32-0","text":"become","start":35.03,"end":35.27},{"id":"caption-word-32-1","text":"problems.","start":35.35,"end":36.23}]},{"id":"caption-group-33","frame":6,"start":36.47,"end":37.55,"text":"Your Social Media","words":[{"id":"caption-word-33-0","text":"Your","start":36.47,"end":36.63},{"id":"caption-word-33-1","text":"Social","start":36.71,"end":37.03},{"id":"caption-word-33-2","text":"Media","start":37.11,"end":37.43}]},{"id":"caption-group-34","frame":6,"start":37.67,"end":38.47,"text":"Manager creates","words":[{"id":"caption-word-34-0","text":"Manager","start":37.67,"end":37.91},{"id":"caption-word-34-1","text":"creates","start":37.99,"end":38.39}]},{"id":"caption-group-35","frame":6,"start":38.47,"end":39.99,"text":"and posts consistent,","words":[{"id":"caption-word-35-0","text":"and","start":38.47,"end":38.55},{"id":"caption-word-35-1","text":"posts","start":38.63,"end":39.03},{"id":"caption-word-35-2","text":"consistent,","start":39.11,"end":39.87}]},{"id":"caption-group-36","frame":6,"start":39.99,"end":40.51,"text":"branded","words":[{"id":"caption-word-36-0","text":"branded","start":39.99,"end":40.39}]},{"id":"caption-group-37","frame":6,"start":40.63,"end":41.23,"text":"content that","words":[{"id":"caption-word-37-0","text":"content","start":40.63,"end":40.87},{"id":"caption-word-37-1","text":"that","start":40.95,"end":41.11}]},{"id":"caption-group-38","frame":6,"start":41.23,"end":42.27,"text":"builds trust.","words":[{"id":"caption-word-38-0","text":"builds","start":41.23,"end":41.43},{"id":"caption-word-38-1","text":"trust.","start":41.51,"end":42.15}]},{"id":"caption-group-39","frame":7,"start":42.39,"end":42.79,"text":"And an","words":[{"id":"caption-word-39-0","text":"And","start":42.39,"end":42.47},{"id":"caption-word-39-1","text":"an","start":42.55,"end":42.71}]},{"id":"caption-group-40","frame":7,"start":42.79,"end":43.95,"text":"AI Website,","words":[{"id":"caption-word-40-0","text":"AI","start":42.79,"end":43.03},{"id":"caption-word-40-1","text":"Website,","start":43.11,"end":43.83}]},{"id":"caption-group-41","frame":7,"start":43.99,"end":44.31,"text":"up to","words":[{"id":"caption-word-41-0","text":"up","start":43.99,"end":44.07},{"id":"caption-word-41-1","text":"to","start":44.15,"end":44.23}]},{"id":"caption-group-42","frame":7,"start":44.31,"end":45.51,"text":"five pages,","words":[{"id":"caption-word-42-0","text":"five","start":44.31,"end":44.55},{"id":"caption-word-42-1","text":"pages,","start":44.63,"end":45.39}]},{"id":"caption-group-43","frame":7,"start":45.67,"end":46.07,"text":"S.E.O.","words":[{"id":"caption-word-43-0","text":"S.E.O.","start":45.67,"end":45.99}]},{"id":"caption-group-44","frame":7,"start":46.07,"end":46.79,"text":"and A.E.O.","words":[{"id":"caption-word-44-0","text":"and","start":46.07,"end":46.15},{"id":"caption-word-44-1","text":"A.E.O.","start":46.31,"end":46.71}]},{"id":"caption-group-45","frame":7,"start":46.79,"end":47.43,"text":"ready,","words":[{"id":"caption-word-45-0","text":"ready,","start":46.79,"end":47.31}]},{"id":"caption-group-46","frame":7,"start":47.51,"end":49.11,"text":"designed to convert.","words":[{"id":"caption-word-46-0","text":"designed","start":47.51,"end":47.99},{"id":"caption-word-46-1","text":"to","start":48.03,"end":48.07},{"id":"caption-word-46-2","text":"convert.","start":48.15,"end":48.99}]},{"id":"caption-group-47","frame":8,"start":49.27,"end":50.43,"text":"Five systems.","words":[{"id":"caption-word-47-0","text":"Five","start":49.27,"end":49.51},{"id":"caption-word-47-1","text":"systems.","start":49.59,"end":50.31}]},{"id":"caption-group-48","frame":8,"start":50.47,"end":51.43,"text":"One suite.","words":[{"id":"caption-word-48-0","text":"One","start":50.47,"end":50.63},{"id":"caption-word-48-1","text":"suite.","start":50.71,"end":51.31}]},{"id":"caption-group-49","frame":8,"start":51.51,"end":52.63,"text":"Discover the Super","words":[{"id":"caption-word-49-0","text":"Discover","start":51.51,"end":51.99},{"id":"caption-word-49-1","text":"the","start":52.07,"end":52.15},{"id":"caption-word-49-2","text":"Super","start":52.31,"end":52.55}]},{"id":"caption-group-50","frame":8,"start":52.63,"end":53.51,"text":"Suite today.","words":[{"id":"caption-word-50-0","text":"Suite","start":52.63,"end":52.87},{"id":"caption-word-50-1","text":"today.","start":52.95,"end":53.39}]},{"id":"caption-group-51","frame":9,"start":53.99,"end":55.51,"text":"Trainor Media Network.","words":[{"id":"caption-word-51-0","text":"Trainor","start":53.99,"end":54.31},{"id":"caption-word-51-1","text":"Media","start":54.39,"end":54.63},{"id":"caption-word-51-2","text":"Network.","start":54.71,"end":55.39}]},{"id":"caption-group-52","frame":9,"start":55.51,"end":56.63,"text":"Because your brand","words":[{"id":"caption-word-52-0","text":"Because","start":55.51,"end":55.83},{"id":"caption-word-52-1","text":"your","start":55.91,"end":56.07},{"id":"caption-word-52-2","text":"brand","start":56.23,"end":56.55}]},{"id":"caption-group-53","frame":9,"start":56.63,"end":57.55,"text":"matters.","words":[{"id":"caption-word-53-0","text":"matters.","start":56.63,"end":57.43}]}];
+  var DURATION = 59.65;
+
+  (function () {
+    var stage = document.getElementById("caption-stage");
+
+    // build DOM: one .caption-group per group, .caption-word per word
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.createElement("div");
+      groupEl.className = "caption-group";
+      groupEl.id = "caption-group-" + g;
+      var pill = document.createElement("div");
+      pill.className = "caption-pill";
+      var line = document.createElement("div");
+      line.className = "caption-line";
+      (group.words || []).forEach(function (w, i) {
+        var span = document.createElement("span");
+        span.className = "caption-word";
+        span.id = "caption-word-" + g + "-" + i;
+        span.textContent = String(w.text);
+        line.appendChild(span);
+      });
+      pill.appendChild(line);
+      groupEl.appendChild(pill);
+      stage.appendChild(groupEl);
+    });
+
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.getElementById("caption-group-" + g);
+      var words = group.words || [];
+      var next = GROUPS[g + 1];
+      var isLast = g === GROUPS.length - 1;
+      var start = Math.max(0, Number(group.start));
+      var end = isLast ? DURATION : Math.min(Number(next.start), Number(group.end) + 0.3);
+      if (end <= start) end = start + 0.01;
+
+      // group on/off — exactly one group visible at a time
+      tl.set(groupEl, { opacity: 1 }, start);
+      tl.set(groupEl, { opacity: 0 }, end);
+
+      // 3-state karaoke via className SETS — seek-safe (gsap.set applies on the
+      // engine's frame-by-frame seek; .call callbacks would NOT fire).
+      words.forEach(function (w, i) {
+        var el = document.getElementById("caption-word-" + g + "-" + i);
+        var at = Math.max(start, Number(w.start));
+        tl.set(el, { className: "caption-word" }, start); // upcoming (also resets on reverse-seek)
+        tl.set(el, { className: "caption-word is-active" }, at); // current
+        tl.fromTo(el, { scale: 0.985 }, { scale: 1, duration: 0.18, ease: "power1.out" }, at);
+        if (i + 1 < words.length) {
+          var nextAt = Math.max(start, Number(words[i + 1].start));
+          tl.set(el, { className: "caption-word is-spoken" }, nextAt); // demote when next activates
+        }
+      });
+      if (words.length) {
+        var lastEl = document.getElementById("caption-word-" + g + "-" + (words.length - 1));
+        var lastSpoken = Math.min(end, Number(words[words.length - 1].end) + 0.1);
+        tl.set(lastEl, { className: "caption-word is-spoken" }, lastSpoken);
+      }
+    });
+
+    // full-span anchor so the sub-comp timeline spans the whole video
+    tl.to({}, { duration: DURATION }, 0);
+    window.__timelines["captions"] = tl;
+  })();
+</script>
+
+<style>
+  .caption-line { line-height: 1.1 !important; }
+</style>
+</template>

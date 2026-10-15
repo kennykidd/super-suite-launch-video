@@ -1,0 +1,28 @@
+<template id="fx-overlay-template">
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .fx-grain { position: absolute; left: -50%; top: -50%; width: 200%; height: 200%; opacity: 0.09; mix-blend-mode: overlay;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    /* vignette — from the hyperframes registry `vignette` component */
+    .fx-vig { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 52%, rgba(0, 0, 0, 0.55) 100%); }
+  </style>
+  <div id="root" data-composition-id="fx-overlay" data-width="1080" data-height="1920" data-duration="59.65">
+    <div id="fx-grain-clip" class="clip" data-start="0" data-duration="59.65" data-track-index="0" style="position:absolute;inset:0"><div class="fx-grain" id="fx-grain"></div></div>
+    <div id="fx-vig" class="clip fx-vig" data-start="0" data-duration="59.65" data-track-index="1"></div>
+  </div>
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script>
+  (function () {
+    const DUR = 59.65;
+    const tl = gsap.timeline({ paused: true });
+    const el = document.getElementById("fx-grain");
+    // Grain jitters 12×/s. Offsets are a pure hash of the step index (no Math.random),
+    // and a property setter drives it so seek() always lands on the right pattern.
+    function hash(i, s) { let h = Math.imul(i, 374761393) + Math.imul(s, 668265263); h = (h ^ (h >>> 13)) >>> 0; h = Math.imul(h, 1274126177) >>> 0; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; }
+    let t = 0; const drv = {};
+    Object.defineProperty(drv, "t", { get: () => t, set: (n) => { t = n; const k = Math.floor(n * 12); gsap.set(el, { xPercent: (hash(k, 1) - 0.5) * 20, yPercent: (hash(k, 2) - 0.5) * 20 }); } });
+    tl.fromTo(drv, { t: 0 }, { t: DUR, duration: DUR, ease: "none" }, 0);
+    window.__timelines["fx-overlay"] = tl;
+  })();
+  </script>
+</template>

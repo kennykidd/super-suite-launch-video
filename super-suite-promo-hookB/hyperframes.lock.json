@@ -1,0 +1,8 @@
+{
+  "compositions/components/camera-shake.html": "3f64f5da225acb5b408847fef9c388f889b1bf1e8d85ec95f0f4316839a60db4",
+  "compositions/components/grain-overlay.html": "97a0da8f26feca9574abcf08b8186cef10ea4819b2aeabc30547ae16ed9ae80d",
+  "compositions/components/notification-pileup.html": "581e2e6b75c8e2f0354ec9b2ade88017de5b540700259ff7823b1b67e24b0973",
+  "compositions/components/rgb-glitch-text.html": "ca732686dde84890e658b9f3900b9e58735d8e7fe0f516ba8dbce094caa9099b",
+  "compositions/components/vignette.html": "b825476ca7bb89c0afbd6f1157b9813ac6a1ac82e9aa13a7cecd7ae305ebb2d5",
+  "compositions/editorial-flash-overlay.html": "4d8a3edc42b63aa99de52e5e1bbc932a7f6ba1e83d52e003aba27cd5a20fc432"
+}

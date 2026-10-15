@@ -1,0 +1,131 @@
+<template id="05-reputation-template">
+  <style>
+
+
+@font-face { font-family: "Space Grotesk"; font-weight: 400; src: url("assets/fonts/space-grotesk-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Space Grotesk"; font-weight: 700; src: url("assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: url("assets/fonts/inter-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 900; src: url("assets/fonts/inter-latin-900-normal.woff2") format("woff2"); }
+
+#root { position: absolute; inset: 0; overflow: hidden; font-family: "Inter", sans-serif; color: #FFFFFF; }
+.f5-bg { position: absolute; inset: 0; background:
+  radial-gradient(ellipse 70% 60% at 50% 42%, rgba(46,168,255,0.16), rgba(46,168,255,0) 70%),
+  radial-gradient(ellipse 45% 40% at 85% 85%, rgba(123,63,242,0.14), rgba(123,63,242,0) 70%),
+  linear-gradient(180deg, #08102A 0%, #060B1E 70%); }
+.f5-grid { position: absolute; inset: 0; opacity: 0.35; background-image:
+  linear-gradient(rgba(46,168,255,0.07) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(46,168,255,0.07) 1px, transparent 1px);
+  background-size: 80px 80px; }
+.f5-stage { position: absolute; inset: 0; }
+.f5-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+.f5-sg { font-family: "Space Grotesk", sans-serif; }
+.f5-glass { background: linear-gradient(160deg, rgba(30,52,110,0.55), rgba(10,20,48,0.72));
+  border: 1.5px solid rgba(46,168,255,0.24); border-radius: 22px; box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+.f5-chip { display: inline-block; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 24px;
+  letter-spacing: 0.08em; text-transform: uppercase; padding: 14px 26px; border-radius: 100px; white-space: nowrap; }
+.f5-check { width: 34px; height: 34px; border-radius: 50%; background: #22C55E; padding: 6px; }
+.f5-check svg, .f5-disc svg { width: 100%; height: 100%; display: block; }
+
+
+.f5-left { position: absolute; left: 140px; top: 230px; width: 660px; }
+.f5-disc { width: 128px; height: 128px; border-radius: 50%; padding: 30px; background: #8B5CF6;
+  box-shadow: 0 0 0 10px #8B5CF626, 0 0 60px #8B5CF688; }
+.f5-eyebrow { margin-top: 40px; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 24px;
+  letter-spacing: 0.24em; color: #8B5CF6; }
+.f5-titlewrap { margin-top: 14px; overflow: hidden; padding-bottom: 6px; }
+.f5-title { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 78px; line-height: 1.0;
+  text-transform: uppercase; letter-spacing: -0.01em; }
+.f5-benefit { margin-top: 40px; color: #FFFFFF; border: 1.5px solid #8B5CF6; background: #8B5CF622; }
+
+.f5-review { position: absolute; left: 960px; top: 140px; width: 800px; padding: 34px 38px; background: #fff; color: #0B1530;
+  border-radius: 24px; box-shadow: 0 40px 90px rgba(0,0,0,0.5), 0 0 60px rgba(139,92,246,0.35); }
+.f5-rh { display: flex; justify-content: space-between; align-items: center; }
+.f5-src { font: 700 26px "Inter", sans-serif; color: #4B5A7A; }
+.f5-score { font: 700 44px "Space Grotesk", sans-serif; color: #0B1530; }
+.f5-mini { display: inline-block; width: 36px; height: 36px; margin-left: 6px; vertical-align: -3px; }
+.f5-mini svg { width: 100%; height: 100%; display: block; }
+.f5-score small { font: 600 22px "Inter", sans-serif; color: #4B5A7A; margin-left: 10px; }
+.f5-stars { position: relative; display: flex; gap: 12px; margin-top: 22px; height: 64px; }
+.f5-st { position: relative; width: 64px; height: 64px; }
+.f5-st svg { position: absolute; inset: 0; width: 64px; height: 64px; }
+.f5-quote { margin-top: 22px; font: 700 40px "Space Grotesk", sans-serif; line-height: 1.2; }
+.f5-who { margin-top: 14px; font: 500 22px "Inter", sans-serif; color: #4B5A7A; }
+.f5-bad { position: absolute; left: 960px; top: 600px; width: 470px; padding: 22px 26px; background: #1A2346; border: 1.5px solid rgba(239,68,68,0.5);
+  border-radius: 18px; }
+.f5-badstars { display: flex; gap: 6px; }
+.f5-badstars svg { width: 30px; height: 30px; }
+.f5-badtxt { margin-top: 10px; font: 600 24px "Inter", sans-serif; color: #B9C6E4; }
+.f5-inbox { position: absolute; left: 1520px; top: 590px; width: 240px; height: 170px; border-radius: 20px; background: rgba(139,92,246,0.18);
+  border: 2px solid #8B5CF6; text-align: center; padding-top: 26px; }
+.f5-lock { width: 60px; height: 60px; margin: 0 auto; border-radius: 50%; background: #8B5CF6; padding: 14px; }
+.f5-lock svg { width: 100%; height: 100%; display: block; }
+.f5-ibt { margin-top: 14px; font: 700 22px "Space Grotesk", sans-serif; letter-spacing: 0.04em; }
+.f5-arrow { position: absolute; left: 1430px; top: 640px; width: 90px; height: 60px; }
+
+.f5-left { left: 80px; top: 200px; width: 920px; }
+.f5-title { font-size: 104px; }
+.f5-disc { width: 140px; height: 140px; padding: 33px; }
+.f5-vstage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; transform: translate(-743px, 655px) scale(0.95); }
+
+  </style>
+  <div id="root" data-composition-id="05-reputation" data-width="1080" data-height="1920" data-duration="7.12">
+    <div id="f5-bg" class="clip f5-bg" data-start="0" data-duration="7.12" data-track-index="0"><div class="f5-grid"></div></div>
+    <div id="f5-stage" class="clip f5-stage" data-start="0" data-duration="7.12" data-track-index="1">
+      <div class="f5-cam">
+
+
+      <div class="f5-left">
+        <div class="f5-disc" id="f5-disc"><svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg></div>
+        <div class="f5-eyebrow" id="f5-eyebrow">03 / 05</div>
+        <div class="f5-titlewrap"><div class="f5-title" id="f5-title">Reputation<br>Management</div></div>
+        <div class="f5-chip f5-benefit" id="f5-benefit">More 5-star reviews</div>
+      </div><div class="f5-vstage">
+        <div class="f5-review" id="f5-review">
+          <div class="f5-rh"><div class="f5-src">Google Reviews</div><div class="f5-score"><span id="f5-score">4.1</span><span class="f5-mini"><svg viewBox="0 0 64 64" fill="#FBBF24" stroke="#FBBF24" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg></span><small><span id="f5-cnt">38</span> reviews</small></div></div>
+          <div class="f5-stars"><div class="f5-st"><svg viewBox="0 0 64 64" fill="none" stroke="#CBD2E1" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><span class="f5-gs"><svg viewBox="0 0 64 64" fill="#FBBF24" stroke="#FBBF24" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg></span></div><div class="f5-st"><svg viewBox="0 0 64 64" fill="none" stroke="#CBD2E1" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><span class="f5-gs"><svg viewBox="0 0 64 64" fill="#FBBF24" stroke="#FBBF24" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg></span></div><div class="f5-st"><svg viewBox="0 0 64 64" fill="none" stroke="#CBD2E1" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><span class="f5-gs"><svg viewBox="0 0 64 64" fill="#FBBF24" stroke="#FBBF24" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg></span></div><div class="f5-st"><svg viewBox="0 0 64 64" fill="none" stroke="#CBD2E1" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><span class="f5-gs"><svg viewBox="0 0 64 64" fill="#FBBF24" stroke="#FBBF24" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg></span></div><div class="f5-st"><svg viewBox="0 0 64 64" fill="none" stroke="#CBD2E1" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><span class="f5-gs"><svg viewBox="0 0 64 64" fill="#FBBF24" stroke="#FBBF24" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg></span></div></div>
+          <div class="f5-quote"><span id="f5-qt" class=""><span class="f5-ch">“</span><span class="f5-ch">A</span><span class="f5-ch">m</span><span class="f5-ch">a</span><span class="f5-ch">z</span><span class="f5-ch">i</span><span class="f5-ch">n</span><span class="f5-ch">g</span><span class="f5-ch">&nbsp;</span><span class="f5-ch">s</span><span class="f5-ch">e</span><span class="f5-ch">r</span><span class="f5-ch">v</span><span class="f5-ch">i</span><span class="f5-ch">c</span><span class="f5-ch">e</span><span class="f5-ch">!</span><span class="f5-ch">&nbsp;</span><span class="f5-ch">H</span><span class="f5-ch">i</span><span class="f5-ch">g</span><span class="f5-ch">h</span><span class="f5-ch">l</span><span class="f5-ch">y</span><span class="f5-ch">&nbsp;</span><span class="f5-ch">r</span><span class="f5-ch">e</span><span class="f5-ch">c</span><span class="f5-ch">o</span><span class="f5-ch">m</span><span class="f5-ch">m</span><span class="f5-ch">e</span><span class="f5-ch">n</span><span class="f5-ch">d</span><span class="f5-ch">!</span><span class="f5-ch">”</span></span></div>
+          <div class="f5-who">— Sarah K., homeowner</div>
+        </div>
+        <div class="f5-bad" id="f5-bad"><div class="f5-badstars"><svg viewBox="0 0 64 64" fill="#FBBF24" stroke="#FBBF24" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><svg viewBox="0 0 64 64" fill="#FBBF24" stroke="#FBBF24" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><svg viewBox="0 0 64 64" fill="none" stroke="#CBD2E1" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><svg viewBox="0 0 64 64" fill="none" stroke="#CBD2E1" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><svg viewBox="0 0 64 64" fill="none" stroke="#CBD2E1" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg></div><div class="f5-badtxt">“Technician was late…”</div></div>
+        <svg class="f5-arrow" id="f5-arrow" viewBox="0 0 90 60" fill="none" stroke="#8B5CF6" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path id="f5-ap" d="M4 30 H78 M60 12 L80 30 L60 48"/></svg>
+        <div class="f5-inbox" id="f5-inbox"><div class="f5-lock"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11 V8 a4 4 0 0 1 8 0 v3"/></svg></div><div class="f5-ibt">Resolve privately</div></div>
+</div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/vendor/gsap.min.js"></script><script src="assets/vendor/camera-shake.js"></script>
+  <script>
+  (function () {
+  const DUR = 7.12;
+  const tl = gsap.timeline({ paused: true });
+  function pulse(sel, vars0, vars1, at, d) { tl.fromTo(sel, vars0, Object.assign({ duration: d, ease: "power2.out", immediateRender: false }, vars1), at); tl.fromTo(sel, vars1, Object.assign({ duration: d, ease: "power2.in", immediateRender: false }, vars0), at + d); }
+
+  tl.fromTo("#f5-disc", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.55, ease: "back.out(1.7)" }, 0.05);
+  tl.fromTo("#f5-eyebrow", { x: -24, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.2);
+  tl.fromTo("#f5-title", { yPercent: 105 }, { yPercent: 0, duration: 0.7, ease: "power3.out" }, 0.25);
+  tl.fromTo("#f5-benefit", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 6.1);
+  tl.fromTo(".f5-cam", { scale: 1 }, { scale: 1.035, duration: DUR, ease: "none" }, 0);
+  tl.fromTo("#f5-review", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 1.2);
+  tl.fromTo(".f5-gs", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.3, stagger: 0.14, ease: "back.out(2.4)", transformOrigin: "50% 50%" }, 2.0);
+  
+  tl.fromTo("#f5-qt span", { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: 0.8 / document.querySelectorAll("#f5-qt span").length }, 2.75);
+  
+  (function () { const el = document.querySelector("#f5-score"); let v = 4.1; const drv_f5score = {}; const d = drv_f5score;
+    Object.defineProperty(d, "v", { get: () => v, set: (n) => { v = n; el.textContent = n.toFixed(1) + ""; } });
+    tl.fromTo(drv_f5score, { v: 4.1 }, { v: 4.9, duration: 1.6, ease: "power2.out" }, 2.0); })();
+  
+  (function () { const el = document.querySelector("#f5-cnt"); let v = 38; const drv_f5cnt = {}; const d = drv_f5cnt;
+    Object.defineProperty(d, "v", { get: () => v, set: (n) => { v = n; el.textContent = n.toFixed(0) + ""; } });
+    tl.fromTo(drv_f5cnt, { v: 38 }, { v: 127, duration: 1.6, ease: "power2.out" }, 2.0); })();
+  tl.fromTo("#f5-bad", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 3.85);
+  tl.fromTo("#f5-inbox", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.8)" }, 4.3);
+  tl.fromTo("#f5-arrow", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.35, ease: "power3.out" }, 4.35);
+  tl.fromTo("#f5-bad", { x: 0, scale: 1, opacity: 1 }, { x: 600, scale: 0.35, opacity: 0, duration: 0.7, ease: "power3.in", immediateRender: false }, 5.05);
+  pulse("#f5-inbox", { scale: 1 }, { scale: 1.08 }, 5.72, 0.15);
+
+  window.__timelines["05-reputation"] = tl;
+  })();
+  </script>
+</template>

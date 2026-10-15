@@ -1,0 +1,82 @@
+<template id="09-brand-template">
+  <style>
+
+
+@font-face { font-family: "Space Grotesk"; font-weight: 400; src: url("assets/fonts/space-grotesk-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Space Grotesk"; font-weight: 700; src: url("assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: url("assets/fonts/inter-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 900; src: url("assets/fonts/inter-latin-900-normal.woff2") format("woff2"); }
+
+#root { position: absolute; inset: 0; overflow: hidden; font-family: "Inter", sans-serif; color: #FFFFFF; }
+.f9-bg { position: absolute; inset: 0; background:
+  radial-gradient(ellipse 70% 60% at 50% 42%, rgba(46,168,255,0.16), rgba(46,168,255,0) 70%),
+  radial-gradient(ellipse 45% 40% at 85% 85%, rgba(123,63,242,0.14), rgba(123,63,242,0) 70%),
+  linear-gradient(180deg, #08102A 0%, #060B1E 70%); }
+.f9-grid { position: absolute; inset: 0; opacity: 0.35; background-image:
+  linear-gradient(rgba(46,168,255,0.07) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(46,168,255,0.07) 1px, transparent 1px);
+  background-size: 80px 80px; }
+.f9-stage { position: absolute; inset: 0; }
+.f9-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+.f9-sg { font-family: "Space Grotesk", sans-serif; }
+.f9-glass { background: linear-gradient(160deg, rgba(30,52,110,0.55), rgba(10,20,48,0.72));
+  border: 1.5px solid rgba(46,168,255,0.24); border-radius: 22px; box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+.f9-chip { display: inline-block; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 24px;
+  letter-spacing: 0.08em; text-transform: uppercase; padding: 14px 26px; border-radius: 100px; white-space: nowrap; }
+.f9-check { width: 34px; height: 34px; border-radius: 50%; background: #22C55E; padding: 6px; }
+.f9-check svg, .f9-disc svg { width: 100%; height: 100%; display: block; }
+
+
+.f9-plate { position: absolute; left: 410px; top: 110px; width: 1100px; height: 640px; border-radius: 36px; background: #F7F5EF;
+  box-shadow: 0 50px 120px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,162,39,0.4); }
+.f9-mark { position: absolute; left: 810px; top: 160px; width: 300px; height: 260px; }
+.f9-n1 { position: absolute; left: 550px; top: 456px; width: 820px; }
+.f9-n2 { position: absolute; left: 631px; top: 548px; width: 657px; }
+.f9-tag { position: absolute; left: 643px; top: 676px; width: 635px; }
+.f9-mark, .f9-n1, .f9-n2, .f9-tag { display: block; }
+.f9-nwrap { position: absolute; inset: 0; }
+.f9-url { position: absolute; left: 0; right: 0; top: 790px; text-align: center; font: 700 52px "Space Grotesk", sans-serif; letter-spacing: 0.01em; }
+.f9-ul { position: absolute; left: 640px; top: 862px; width: 640px; height: 5px; border-radius: 3px; background: linear-gradient(90deg, #C9A227, #2EA8FF); transform-origin: 0 50%; }
+.f9-vstage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; transform: translate(-324px, 470px) scale(0.9); }
+
+  </style>
+  <div id="root" data-composition-id="09-brand" data-width="1080" data-height="1920" data-duration="6.2">
+    <div id="f9-bg" class="clip f9-bg" data-start="0" data-duration="6.2" data-track-index="0"><div class="f9-grid"></div></div>
+    <div id="f9-stage" class="clip f9-stage" data-start="0" data-duration="6.2" data-track-index="1">
+      <div class="f9-cam">
+<div class="f9-vstage">
+        <div class="f9-plate" id="f9-plate"></div>
+        <img class="f9-mark" id="f9-mark" src="assets/tmn-mark.png" alt="">
+        <img class="f9-n1" id="f9-n1" src="assets/tmn-name1.png" alt="">
+        <img class="f9-n2" id="f9-n2" src="assets/tmn-name2.png" alt="">
+        <img class="f9-tag" id="f9-tag" src="assets/tmn-tagline.png" alt="">
+        <div class="f9-url"><span id="f9-u" class=""><span class="f9-ch">T</span><span class="f9-ch">r</span><span class="f9-ch">a</span><span class="f9-ch">i</span><span class="f9-ch">n</span><span class="f9-ch">o</span><span class="f9-ch">r</span><span class="f9-ch">M</span><span class="f9-ch">e</span><span class="f9-ch">d</span><span class="f9-ch">i</span><span class="f9-ch">a</span><span class="f9-ch">N</span><span class="f9-ch">e</span><span class="f9-ch">t</span><span class="f9-ch">w</span><span class="f9-ch">o</span><span class="f9-ch">r</span><span class="f9-ch">k</span><span class="f9-ch">.</span><span class="f9-ch">c</span><span class="f9-ch">o</span><span class="f9-ch">m</span></span></div>
+        <div class="f9-ul" id="f9-ul"></div>
+</div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/vendor/gsap.min.js"></script><script src="assets/vendor/camera-shake.js"></script>
+  <script>
+  (function () {
+  const DUR = 6.2;
+  const tl = gsap.timeline({ paused: true });
+  function pulse(sel, vars0, vars1, at, d) { tl.fromTo(sel, vars0, Object.assign({ duration: d, ease: "power2.out", immediateRender: false }, vars1), at); tl.fromTo(sel, vars1, Object.assign({ duration: d, ease: "power2.in", immediateRender: false }, vars0), at + d); }
+
+  tl.fromTo("#f9-plate", { y: 60, opacity: 0, scale: 0.96 }, { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "power3.out" }, 0);
+  tl.fromTo("#f9-mark", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.0, ease: "power3.out" }, 0.45);
+  tl.fromTo("#f9-mark", { y: 30 }, { y: 0, duration: 1.0, ease: "power3.out" }, 0.45);
+  tl.fromTo("#f9-n1", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.9);
+  tl.fromTo("#f9-n2", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 1.25);
+  tl.fromTo("#f9-tag", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 2.1);
+  
+  tl.fromTo("#f9-u span", { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: 0.9 / document.querySelectorAll("#f9-u span").length }, 3.0);
+  tl.fromTo("#f9-ul", { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power3.inOut" }, 3.8);
+  tl.fromTo(".f9-cam", { scale: 1 }, { scale: 1.025, duration: DUR, ease: "none" }, 0);
+
+  window.__timelines["09-brand"] = tl;
+  })();
+  </script>
+</template>

@@ -1,0 +1,830 @@
+{
+  "ok": false,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 3,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 377 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/videos/super-suite-promo-vertical-hookB/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      },
+      {
+        "code": "gsap_timeline_set_initial_hide",
+        "severity": "warning",
+        "message": "Initial hidden state for \"#f1-k1, #f1-k2, #f1-k3\" is set via tl.set(...) at position 0 inside the paused timeline. A zero-duration set at 0 does not render while the playhead sits exactly at 0, so frame 0 shows the un-hidden state.",
+        "selector": "#f1-k1, #f1-k2, #f1-k3",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/videos/super-suite-promo-vertical-hookB/compositions/frames/01-hook.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use gsap.set(...) (immediate, outside the timeline) for initial states, or author the hidden state directly in CSS/attributes."
+      },
+      {
+        "code": "gsap_repeated_fromto_without_baseline",
+        "severity": "warning",
+        "message": "2 tl.fromTo() calls target \"dwell/hold\" with no stable baseline. The last-authored fromTo \"from\" values become the element's resting state for any seek before the first tween actually runs, because GSAP applies fromTo from-values at authoring time (immediateRender), not at tween position.",
+        "selector": "dwell/hold",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/videos/super-suite-promo-vertical-hookB/compositions/frames/05-reputation.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add `immediateRender: false` to every fromTo except the earliest-positioned one (at 2s), so pre-first-tween seeks keep its \"from\" values. A hiding `tl.set(..., 0)` baseline trips gsap_timeline_set_initial_hide, and a `gsap.set` authored before the fromTo calls is overwritten by them."
+      }
+    ],
+    "filesScanned": 13
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-09-brand-voice\" is 3.98s but its slot (data-duration) is 6.20s — the slot is shortened to the media length when rendered. Set data-duration to ~3.98s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "59.65",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      }
+    ]
+  },
+  "layout": {
+    "ok": false,
+    "errorCount": 3,
+    "warningCount": 0,
+    "infoCount": 14,
+    "findings": [
+      {
+        "code": "text_not_painted",
+        "severity": "error",
+        "time": 3.314,
+        "selector": "#f1-pin0 > div:nth-of-type(1)",
+        "message": "Text paints with an effectively transparent fill (-webkit-text-fill-color / color), so its glyphs are invisible.",
+        "rect": {
+          "left": 98.13,
+          "top": 810.42,
+          "right": 113.32,
+          "bottom": 821.73,
+          "width": 15.19,
+          "height": 11.31
+        },
+        "text": "1",
+        "fixHint": "Set an explicit, opaque `color` on the text — and an explicit `-webkit-text-fill-color` if an ancestor makes the fill transparent. If the transparency is intentional gradient text, add `background-clip: text`.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-hook.html",
+        "bbox": {
+          "x": 98.13,
+          "y": 810.42,
+          "width": 15.19,
+          "height": 11.31
+        },
+        "firstSeen": 3.314,
+        "lastSeen": 3.314,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.314
+        ]
+      },
+      {
+        "code": "text_not_painted",
+        "severity": "error",
+        "time": 3.314,
+        "selector": "#f1-pin1 > div:nth-of-type(1)",
+        "message": "Text paints with an effectively transparent fill (-webkit-text-fill-color / color), so its glyphs are invisible.",
+        "rect": {
+          "left": 797.27,
+          "top": 736.55,
+          "right": 815.65,
+          "bottom": 748.23,
+          "width": 18.38,
+          "height": 11.68
+        },
+        "text": "2",
+        "fixHint": "Set an explicit, opaque `color` on the text — and an explicit `-webkit-text-fill-color` if an ancestor makes the fill transparent. If the transparency is intentional gradient text, add `background-clip: text`.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-hook.html",
+        "bbox": {
+          "x": 797.27,
+          "y": 736.55,
+          "width": 18.38,
+          "height": 11.68
+        },
+        "firstSeen": 3.314,
+        "lastSeen": 3.314,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.314
+        ]
+      },
+      {
+        "code": "text_not_painted",
+        "severity": "error",
+        "time": 3.314,
+        "selector": "#f1-pin2 > div:nth-of-type(1)",
+        "message": "Text paints with an effectively transparent fill (-webkit-text-fill-color / color), so its glyphs are invisible.",
+        "rect": {
+          "left": 727.11,
+          "top": 1235.84,
+          "right": 749.56,
+          "bottom": 1254.36,
+          "width": 22.45,
+          "height": 18.52
+        },
+        "text": "3",
+        "fixHint": "Set an explicit, opaque `color` on the text — and an explicit `-webkit-text-fill-color` if an ancestor makes the fill transparent. If the transparency is intentional gradient text, add `background-clip: text`.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-hook.html",
+        "bbox": {
+          "x": 727.11,
+          "y": 1235.84,
+          "width": 22.45,
+          "height": 18.52
+        },
+        "firstSeen": 3.314,
+        "lastSeen": 3.314,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.314
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 3.314,
+        "selector": "#f1-pin0 > div:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 98.13,
+          "top": 810.42,
+          "right": 113.32,
+          "bottom": 821.73,
+          "width": 15.19,
+          "height": 11.31
+        },
+        "containerSelector": "#f1-res2",
+        "text": "1",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-hook.html",
+        "bbox": {
+          "x": 98.13,
+          "y": 810.42,
+          "width": 15.19,
+          "height": 11.31
+        },
+        "firstSeen": 3.314,
+        "lastSeen": 3.314,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.314
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 3.314,
+        "selector": "#f1-pin1 > div:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 797.27,
+          "top": 736.55,
+          "right": 815.65,
+          "bottom": 748.23,
+          "width": 18.38,
+          "height": 11.68
+        },
+        "containerSelector": "#f1-res2",
+        "text": "2",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-hook.html",
+        "bbox": {
+          "x": 797.27,
+          "y": 736.55,
+          "width": 18.38,
+          "height": 11.68
+        },
+        "firstSeen": 3.314,
+        "lastSeen": 3.314,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.314
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 3.314,
+        "selector": "#f1-pin2 > div:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 727.11,
+          "top": 1235.84,
+          "right": 749.56,
+          "bottom": 1254.36,
+          "width": 22.45,
+          "height": 18.52
+        },
+        "containerSelector": "div.f1-glow",
+        "text": "3",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-hook.html",
+        "bbox": {
+          "x": 727.11,
+          "y": 1235.84,
+          "width": 22.45,
+          "height": 18.52
+        },
+        "firstSeen": 3.314,
+        "lastSeen": 3.314,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.314
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 3.314,
+        "selector": "#f1-rig",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -53.88,
+          "top": -115.59,
+          "right": 1110.25,
+          "bottom": 1953.98,
+          "width": 1164.13,
+          "height": 2069.57
+        },
+        "containerSelector": "div.f1-frame",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 53.88,
+          "right": 30.25,
+          "top": 115.59,
+          "bottom": 33.98
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-hook.html",
+        "bbox": {
+          "x": -53.88,
+          "y": -115.59,
+          "width": 1164.13,
+          "height": 2069.57
+        },
+        "firstSeen": 3.314,
+        "lastSeen": 3.314,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.314
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 3.314,
+        "selector": "#f1-map > svg:nth-of-type(1) > line:nth-of-type(1)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -1468.09,
+          "top": 481.11,
+          "right": -287.89,
+          "bottom": 2433.08,
+          "width": 1180.2,
+          "height": 1951.97
+        },
+        "containerSelector": "#f1-map > svg:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": -897.73,
+          "top": 481.11,
+          "right": 1954.09,
+          "bottom": 2433.08,
+          "width": 2851.82,
+          "height": 1951.97
+        },
+        "overflow": {
+          "left": 570.36
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-hook.html",
+        "bbox": {
+          "x": -1468.09,
+          "y": 481.11,
+          "width": 1180.2,
+          "height": 1951.97
+        },
+        "firstSeen": 3.314,
+        "lastSeen": 3.314,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.314
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 3.314,
+        "selector": "#f1-map > svg:nth-of-type(1) > line:nth-of-type(2)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -1154.39,
+          "top": 481.11,
+          "right": -151.88,
+          "bottom": 2433.08,
+          "width": 1002.51,
+          "height": 1951.97
+        },
+        "containerSelector": "#f1-map > svg:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": -897.73,
+          "top": 481.11,
+          "right": 1954.09,
+          "bottom": 2433.08,
+          "width": 2851.82,
+          "height": 1951.97
+        },
+        "overflow": {
+          "left": 256.66
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-hook.html",
+        "bbox": {
+          "x": -1154.39,
+          "y": 481.11,
+          "width": 1002.51,
+          "height": 1951.97
+        },
+        "firstSeen": 3.314,
+        "lastSeen": 3.314,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.314
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 3.314,
+        "selector": "#f1-map > svg:nth-of-type(1) > line:nth-of-type(12)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 1158.79,
+          "top": 481.11,
+          "right": 2096.68,
+          "bottom": 2433.08,
+          "width": 937.9,
+          "height": 1951.97
+        },
+        "containerSelector": "#f1-map > svg:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": -897.73,
+          "top": 481.11,
+          "right": 1954.09,
+          "bottom": 2433.08,
+          "width": 2851.82,
+          "height": 1951.97
+        },
+        "overflow": {
+          "right": 142.59
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-hook.html",
+        "bbox": {
+          "x": 1158.79,
+          "y": 481.11,
+          "width": 937.9,
+          "height": 1951.97
+        },
+        "firstSeen": 3.314,
+        "lastSeen": 3.314,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.314
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 3.314,
+        "selector": "#f1-map > svg:nth-of-type(1) > line:nth-of-type(13)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 1294.8,
+          "top": 481.11,
+          "right": 2410.38,
+          "bottom": 2433.08,
+          "width": 1115.58,
+          "height": 1951.97
+        },
+        "containerSelector": "#f1-map > svg:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": -897.73,
+          "top": 481.11,
+          "right": 1954.09,
+          "bottom": 2433.08,
+          "width": 2851.82,
+          "height": 1951.97
+        },
+        "overflow": {
+          "right": 456.29
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-hook.html",
+        "bbox": {
+          "x": 1294.8,
+          "y": 481.11,
+          "width": 1115.58,
+          "height": 1951.97
+        },
+        "firstSeen": 3.314,
+        "lastSeen": 3.314,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.314
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 3.314,
+        "selector": "#f1-map > svg:nth-of-type(1) > line:nth-of-type(14)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -90.06,
+          "top": 456.14,
+          "right": 1146.42,
+          "bottom": 481.11,
+          "width": 1236.48,
+          "height": 24.97
+        },
+        "containerSelector": "#f1-map > svg:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": -897.73,
+          "top": 481.11,
+          "right": 1954.09,
+          "bottom": 2433.08,
+          "width": 2851.82,
+          "height": 1951.97
+        },
+        "overflow": {
+          "top": 24.97
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-hook.html",
+        "bbox": {
+          "x": -90.06,
+          "y": 456.14,
+          "width": 1236.48,
+          "height": 24.97
+        },
+        "firstSeen": 3.314,
+        "lastSeen": 3.314,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.314
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 3.314,
+        "selector": "#f1-map > svg:nth-of-type(1) > line:nth-of-type(25)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -986.79,
+          "top": 2501.96,
+          "right": 2043.15,
+          "bottom": 2648.32,
+          "width": 3029.94,
+          "height": 146.36
+        },
+        "containerSelector": "#f1-map > svg:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": -897.73,
+          "top": 481.11,
+          "right": 1954.09,
+          "bottom": 2433.08,
+          "width": 2851.82,
+          "height": 1951.97
+        },
+        "overflow": {
+          "left": 89.06,
+          "right": 89.06,
+          "bottom": 215.24
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-hook.html",
+        "bbox": {
+          "x": -986.79,
+          "y": 2501.96,
+          "width": 3029.94,
+          "height": 146.36
+        },
+        "firstSeen": 3.314,
+        "lastSeen": 3.314,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.314
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 29.825,
+        "selector": "#f5-title",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 78.71,
+          "top": 442.79,
+          "right": 769.55,
+          "bottom": 651.37,
+          "width": 690.84,
+          "height": 208.58
+        },
+        "containerSelector": "div.f5-titlewrap",
+        "text": "ReputationManagement",
+        "fixHint": "Text is 691px x 209px inside 923px x 215px and overflows by up to 13px; increase the container height to at least ~228px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 78.71,
+          "top": 423.77,
+          "right": 1001.29,
+          "bottom": 638.37,
+          "width": 922.58,
+          "height": 214.6
+        },
+        "overflow": {
+          "bottom": 13
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-reputation.html",
+        "bbox": {
+          "x": 78.71,
+          "y": 442.79,
+          "width": 690.84,
+          "height": 208.58
+        },
+        "firstSeen": 29.825,
+        "lastSeen": 29.825,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          29.825
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 29.825,
+        "selector": "#f5-title",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 78.71,
+          "top": 442.79,
+          "right": 1001.29,
+          "bottom": 651.37,
+          "width": 922.58,
+          "height": 208.58
+        },
+        "containerSelector": "div.f5-titlewrap",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 78.71,
+          "top": 423.77,
+          "right": 1001.29,
+          "bottom": 638.37,
+          "width": 922.58,
+          "height": 214.6
+        },
+        "overflow": {
+          "bottom": 13
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-reputation.html",
+        "bbox": {
+          "x": 78.71,
+          "y": 442.79,
+          "width": 922.58,
+          "height": 208.58
+        },
+        "firstSeen": 29.825,
+        "lastSeen": 29.825,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          29.825
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 36.453,
+        "selector": "#f6-title",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 1153.1,
+          "top": 629.28,
+          "right": 1826.33,
+          "bottom": 865.4,
+          "width": 673.23,
+          "height": 236.12
+        },
+        "containerSelector": "#root",
+        "text": "Social MediaManager",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "right": 746.33
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-social.html",
+        "bbox": {
+          "x": 1153.1,
+          "y": 629.28,
+          "width": 673.23,
+          "height": 236.12
+        },
+        "firstSeen": 36.453,
+        "lastSeen": 36.453,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          36.453
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 36.453,
+        "selector": "#f6-title",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 1153.1,
+          "top": 643.29,
+          "right": 2073.56,
+          "bottom": 851.39,
+          "width": 920.46,
+          "height": 208.1
+        },
+        "containerSelector": "div.f6-titlewrap",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 1153.1,
+          "top": 424.78,
+          "right": 2073.56,
+          "bottom": 638.89,
+          "width": 920.46,
+          "height": 214.11
+        },
+        "overflow": {
+          "bottom": 212.5
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-social.html",
+        "bbox": {
+          "x": 1153.1,
+          "y": 643.29,
+          "width": 920.46,
+          "height": 208.1
+        },
+        "firstSeen": 36.453,
+        "lastSeen": 36.453,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          36.453
+        ]
+      }
+    ],
+    "duration": 59.65,
+    "samples": [
+      3.314,
+      9.942,
+      16.569,
+      23.197,
+      29.825,
+      36.453,
+      43.081,
+      49.708,
+      56.336
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 17,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      3.314,
+      16.569,
+      29.825,
+      43.081,
+      56.336
+    ],
+    "checked": 74,
+    "passed": 74
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

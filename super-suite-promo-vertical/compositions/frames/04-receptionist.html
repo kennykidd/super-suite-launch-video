@@ -1,0 +1,127 @@
+<template id="04-receptionist-template">
+  <style>
+
+
+@font-face { font-family: "Space Grotesk"; font-weight: 400; src: url("assets/fonts/space-grotesk-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Space Grotesk"; font-weight: 700; src: url("assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: url("assets/fonts/inter-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 900; src: url("assets/fonts/inter-latin-900-normal.woff2") format("woff2"); }
+
+#root { position: absolute; inset: 0; overflow: hidden; font-family: "Inter", sans-serif; color: #FFFFFF; }
+.f4-bg { position: absolute; inset: 0; background:
+  radial-gradient(ellipse 70% 60% at 50% 42%, rgba(46,168,255,0.16), rgba(46,168,255,0) 70%),
+  radial-gradient(ellipse 45% 40% at 85% 85%, rgba(123,63,242,0.14), rgba(123,63,242,0) 70%),
+  linear-gradient(180deg, #08102A 0%, #060B1E 70%); }
+.f4-grid { position: absolute; inset: 0; opacity: 0.35; background-image:
+  linear-gradient(rgba(46,168,255,0.07) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(46,168,255,0.07) 1px, transparent 1px);
+  background-size: 80px 80px; }
+.f4-stage { position: absolute; inset: 0; }
+.f4-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+.f4-sg { font-family: "Space Grotesk", sans-serif; }
+.f4-glass { background: linear-gradient(160deg, rgba(30,52,110,0.55), rgba(10,20,48,0.72));
+  border: 1.5px solid rgba(46,168,255,0.24); border-radius: 22px; box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+.f4-chip { display: inline-block; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 24px;
+  letter-spacing: 0.08em; text-transform: uppercase; padding: 14px 26px; border-radius: 100px; white-space: nowrap; }
+.f4-check { width: 34px; height: 34px; border-radius: 50%; background: #22C55E; padding: 6px; }
+.f4-check svg, .f4-disc svg { width: 100%; height: 100%; display: block; }
+
+
+.f4-left { position: absolute; left: 140px; top: 230px; width: 660px; }
+.f4-disc { width: 128px; height: 128px; border-radius: 50%; padding: 30px; background: #22C55E;
+  box-shadow: 0 0 0 10px #22C55E26, 0 0 60px #22C55E88; }
+.f4-eyebrow { margin-top: 40px; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 24px;
+  letter-spacing: 0.24em; color: #22C55E; }
+.f4-titlewrap { margin-top: 14px; overflow: hidden; padding-bottom: 6px; }
+.f4-title { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 78px; line-height: 1.0;
+  text-transform: uppercase; letter-spacing: -0.01em; }
+.f4-benefit { margin-top: 40px; color: #FFFFFF; border: 1.5px solid #22C55E; background: #22C55E22; }
+
+.f4-phone { position: absolute; left: 1000px; top: 110px; width: 380px; height: 760px; border-radius: 56px; background: #0A0F22;
+  border: 10px solid #1B2547; box-shadow: 0 40px 90px rgba(0,0,0,0.55), 0 0 0 1.5px rgba(46,168,255,0.3); overflow: hidden; }
+.f4-notch { position: absolute; left: 120px; top: 14px; width: 120px; height: 30px; border-radius: 20px; background: #1B2547; }
+.f4-incoming { position: absolute; left: 0; right: 0; top: 90px; text-align: center; font: 600 24px "Inter", sans-serif; color: #B9C6E4; }
+.f4-avwrap { position: absolute; left: 110px; top: 150px; width: 140px; height: 140px; }
+.f4-rip { position: absolute; inset: 0; border-radius: 50%; border: 3px solid #22C55E; }
+.f4-av { position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(140deg, #34D399, #059669); padding: 34px; }
+.f4-av svg { width: 100%; height: 100%; display: block; }
+.f4-name { position: absolute; left: 0; right: 0; top: 312px; text-align: center; font: 700 30px "Space Grotesk", sans-serif; }
+.f4-status { position: absolute; left: 0; right: 0; top: 356px; text-align: center; font: 600 22px "Inter", sans-serif; color: #22C55E; }
+.f4-b { position: absolute; max-width: 280px; padding: 14px 18px; border-radius: 20px; font: 600 21px "Inter", sans-serif; line-height: 1.3; }
+.f4-b1 { left: 22px; top: 420px; background: #1E2A52; border-bottom-left-radius: 6px; }
+.f4-b2 { right: 22px; top: 510px; background: #22C55E; color: #04210F; border-bottom-right-radius: 6px; }
+.f4-btns { position: absolute; left: 0; right: 0; top: 640px; display: flex; justify-content: center; gap: 60px; }
+.f4-btn { width: 72px; height: 72px; border-radius: 50%; padding: 18px; }
+.f4-btn svg { width: 100%; height: 100%; display: block; }
+.f4-247 { position: absolute; left: 1330px; top: 140px; width: 150px; height: 150px; border-radius: 50%; background: #22C55E;
+  color: #04210F; font: 700 48px "Space Grotesk", sans-serif; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 50px rgba(34,197,94,0.6); }
+.f4-book { position: absolute; left: 1420px; top: 560px; width: 380px; padding: 24px 26px; background: #fff; color: #0B1530; border-radius: 20px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.5); display: flex; gap: 18px; align-items: center; }
+.f4-bookic { width: 64px; height: 64px; border-radius: 16px; background: #22C55E; padding: 14px; flex: none; }
+.f4-bookic svg { width: 100%; height: 100%; display: block; }
+.f4-bt1 { font: 700 26px "Inter", sans-serif; }
+.f4-bt2 { font: 500 22px "Inter", sans-serif; color: #4B5A7A; margin-top: 4px; }
+
+.f4-left { left: 80px; top: 200px; width: 920px; }
+.f4-title { font-size: 104px; }
+.f4-disc { width: 140px; height: 140px; padding: 33px; }
+.f4-vstage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; transform: translate(-743px, 655px) scale(0.95); }
+
+  </style>
+  <div id="root" data-composition-id="04-receptionist" data-width="1080" data-height="1920" data-duration="6.9">
+    <div id="f4-bg" class="clip f4-bg" data-start="0" data-duration="6.9" data-track-index="0"><div class="f4-grid"></div></div>
+    <div id="f4-stage" class="clip f4-stage" data-start="0" data-duration="6.9" data-track-index="1">
+      <div class="f4-cam">
+
+
+      <div class="f4-left">
+        <div class="f4-disc" id="f4-disc"><svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"><path d="M18 8 h9 l5 13 -7 5 c3 7 8 12 15 15 l5 -7 13 5 v9 c0 4 -3 7 -7 7 C29 55 9 35 9 15 c0 -4 3 -7 9 -7 z"/></svg></div>
+        <div class="f4-eyebrow" id="f4-eyebrow">02 / 05</div>
+        <div class="f4-titlewrap"><div class="f4-title" id="f4-title">AI<br>Receptionist</div></div>
+        <div class="f4-chip f4-benefit" id="f4-benefit">Never miss a call</div>
+      </div><div class="f4-vstage">
+        <div class="f4-phone" id="f4-phone">
+          <div class="f4-notch"></div>
+          <div class="f4-incoming" id="f4-inc">Incoming call…</div>
+          <div class="f4-avwrap"><div class="f4-rip"></div><div class="f4-rip"></div><div class="f4-av"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M4 14 v-2 a8 8 0 0 1 16 0 v2"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/><path d="M19 19 c0 2 -2 3 -5 3"/></svg></div></div>
+          <div class="f4-name">AI Receptionist</div>
+          <div class="f4-status" id="f4-status">Connected · answering</div>
+          <div class="f4-b f4-b1" id="f4-b1">Do you service AC units?</div>
+          <div class="f4-b f4-b2" id="f4-b2">Yes! How can I help you today?</div>
+          <div class="f4-btns"><div class="f4-btn" style="background:#EF4444"><svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"><path d="M18 8 h9 l5 13 -7 5 c3 7 8 12 15 15 l5 -7 13 5 v9 c0 4 -3 7 -7 7 C29 55 9 35 9 15 c0 -4 3 -7 9 -7 z"/></svg></div><div class="f4-btn" id="f4-accept" style="background:#22C55E"><svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"><path d="M18 8 h9 l5 13 -7 5 c3 7 8 12 15 15 l5 -7 13 5 v9 c0 4 -3 7 -7 7 C29 55 9 35 9 15 c0 -4 3 -7 9 -7 z"/></svg></div></div>
+        </div>
+        <div class="f4-247" id="f4-247">24/7</div>
+        <div class="f4-book" id="f4-book"><div class="f4-bookic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10 h17 M8 3 v4 M16 3 v4"/></svg></div><div><div class="f4-bt1">Appointment booked</div><div class="f4-bt2">Tue · 9:00 AM</div></div><div class="f4-check" style="margin-left:auto"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 l4.5 4.5 L19 7.5"/></svg></div></div>
+</div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/vendor/gsap.min.js"></script><script src="assets/vendor/camera-shake.js"></script>
+  <script>
+  (function () {
+  const DUR = 6.9;
+  const tl = gsap.timeline({ paused: true });
+  function pulse(sel, vars0, vars1, at, d) { tl.fromTo(sel, vars0, Object.assign({ duration: d, ease: "power2.out", immediateRender: false }, vars1), at); tl.fromTo(sel, vars1, Object.assign({ duration: d, ease: "power2.in", immediateRender: false }, vars0), at + d); }
+
+  tl.fromTo("#f4-disc", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.55, ease: "back.out(1.7)" }, 0.05);
+  tl.fromTo("#f4-eyebrow", { x: -24, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.2);
+  tl.fromTo("#f4-title", { yPercent: 105 }, { yPercent: 0, duration: 0.7, ease: "power3.out" }, 0.25);
+  tl.fromTo("#f4-benefit", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 5.5);
+  tl.fromTo(".f4-cam", { scale: 1 }, { scale: 1.035, duration: DUR, ease: "none" }, 0);
+  tl.fromTo("#f4-phone", { y: 160, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 0.6);
+  tl.fromTo(".f4-rip", { scale: 1, opacity: 0.9 }, { scale: 1.7, opacity: 0, duration: 0.8, stagger: 0.35, ease: "power2.out" }, 0.8);
+  pulse("#f4-accept", { scale: 1 }, { scale: 1.25 }, 1.55, 0.15);
+  tl.fromTo("#f4-inc", { opacity: 1 }, { opacity: 0, duration: 0.2 }, 1.6);
+  tl.fromTo("#f4-status", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 1.65);
+  tl.fromTo("#f4-247", { scale: 0, rotation: -20 }, { scale: 1, rotation: 0, duration: 0.55, ease: "back.out(1.9)" }, 2.9);
+  tl.fromTo("#f4-b1", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 3.95);
+  tl.fromTo("#f4-b2", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 4.6);
+  tl.fromTo("#f4-book", { x: 60, opacity: 0, scale: 0.9 }, { x: 0, opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.5)" }, 5.45);
+
+  window.__timelines["04-receptionist"] = tl;
+  })();
+  </script>
+</template>

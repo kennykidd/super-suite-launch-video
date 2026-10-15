@@ -1,0 +1,265 @@
+<template id="01-hook-template">
+  <style>
+
+
+@font-face { font-family: "Space Grotesk"; font-weight: 400; src: url("assets/fonts/space-grotesk-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Space Grotesk"; font-weight: 700; src: url("assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: url("assets/fonts/inter-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 900; src: url("assets/fonts/inter-latin-900-normal.woff2") format("woff2"); }
+
+#root { position: absolute; inset: 0; overflow: hidden; font-family: "Inter", sans-serif; color: #FFFFFF; }
+.f1-bg { position: absolute; inset: 0; background:
+  radial-gradient(ellipse 70% 60% at 50% 42%, rgba(46,168,255,0.16), rgba(46,168,255,0) 70%),
+  radial-gradient(ellipse 45% 40% at 85% 85%, rgba(123,63,242,0.14), rgba(123,63,242,0) 70%),
+  linear-gradient(180deg, #08102A 0%, #060B1E 70%); }
+.f1-grid { position: absolute; inset: 0; opacity: 0.35; background-image:
+  linear-gradient(rgba(46,168,255,0.07) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(46,168,255,0.07) 1px, transparent 1px);
+  background-size: 80px 80px; }
+.f1-stage { position: absolute; inset: 0; }
+.f1-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+.f1-sg { font-family: "Space Grotesk", sans-serif; }
+.f1-glass { background: linear-gradient(160deg, rgba(30,52,110,0.55), rgba(10,20,48,0.72));
+  border: 1.5px solid rgba(46,168,255,0.24); border-radius: 22px; box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+.f1-chip { display: inline-block; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 24px;
+  letter-spacing: 0.08em; text-transform: uppercase; padding: 14px 26px; border-radius: 100px; white-space: nowrap; }
+.f1-check { width: 34px; height: 34px; border-radius: 50%; background: #22C55E; padding: 6px; }
+.f1-check svg, .f1-disc svg { width: 100%; height: 100%; display: block; }
+
+
+.f1-frame { position: absolute; inset: 0; overflow: hidden; }
+.f1-rig { position: absolute; inset: 0; transform-origin: 50% 50%; }
+.f1-punch { position: absolute; inset: 0; transform-origin: 50% 50%; }
+.f1-alarm { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 55% at 70% 45%, rgba(255,59,59,0.42), rgba(255,59,59,0) 70%); }
+.f1-sc { position: absolute; inset: 0; }
+/* glitch word */
+.f1-gw { position: absolute; font-family: "Space Grotesk", sans-serif; font-weight: 700; line-height: 0.9; letter-spacing: -0.03em;
+  text-transform: uppercase; white-space: nowrap; }
+.f1-gw span, .f1-gw strong { position: absolute; left: 0; top: 0; }
+.f1-gw strong { position: relative; color: #fff; }
+.f1-gr { color: #FF3B3B; mix-blend-mode: screen; }
+.f1-gc { color: #22D3EE; mix-blend-mode: screen; }
+.f1-big { font-size: 210px; left: 150px; }
+#f1-w1a, #f1-w2a, #f1-w3a { top: 230px; }
+#f1-w1b, #f1-w2b, #f1-w3b { top: 450px; }
+#f1-w2b { font-size: 140px; top: 470px; }
+#f1-w3b { font-size: 160px; top: 465px; }
+.f1-red strong { color: #FF3B3B; text-shadow: 0 0 60px rgba(255,59,59,0.6); }
+/* scene A — phone */
+.f1-phone { position: absolute; left: 1180px; top: 110px; width: 450px; height: 770px; border-radius: 64px; background: #05070F;
+  border: 12px solid #1A2033; box-shadow: 0 0 0 2px rgba(255,59,59,0.5), 0 50px 120px rgba(0,0,0,0.7), 0 0 140px rgba(255,59,59,0.35); overflow: hidden; }
+.f1-time { position: absolute; left: 0; right: 0; top: 70px; text-align: center; font: 700 110px "Space Grotesk", sans-serif; color: #E8ECF8; }
+.f1-date { position: absolute; left: 0; right: 0; top: 200px; text-align: center; font: 600 24px "Inter", sans-serif; color: #8D97B5; }
+.f1-stack { position: absolute; left: 22px; right: 22px; top: 260px; height: 560px; }
+.f1-nt { position: absolute; left: 0; right: 0; top: 0; height: 92px; border-radius: 22px; background: rgba(40,46,66,0.92);
+  display: flex; align-items: center; gap: 14px; padding: 0 18px; border: 1px solid rgba(255,255,255,0.08); }
+.f1-nic { width: 52px; height: 52px; border-radius: 14px; background: #FF3B3B; padding: 12px; flex: none; }
+.f1-nic svg { width: 100%; height: 100%; display: block; }
+.f1-ntx { flex: 1; }
+.f1-nh { font: 700 22px "Inter", sans-serif; color: #fff; }
+.f1-ns { font: 500 19px "Inter", sans-serif; color: #A9B2CC; margin-top: 2px; }
+.f1-nw { font: 500 17px "Inter", sans-serif; color: #8D97B5; align-self: flex-start; margin-top: 18px; }
+.f1-count { position: absolute; left: 1560px; top: 70px; width: 130px; height: 130px; border-radius: 50%; background: #FF3B3B;
+  font: 700 64px "Space Grotesk", sans-serif; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 60px rgba(255,59,59,0.8); }
+/* scene B — calendar */
+.f1-calwrap { position: absolute; left: 900px; top: 120px; width: 900px; height: 700px; perspective: 1400px; }
+.f1-cal { position: absolute; inset: 0; display: flex; gap: 14px; transform-origin: 50% 60%; }
+.f1-day { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.f1-dh { font: 700 26px "Space Grotesk", sans-serif; color: #8D97B5; letter-spacing: 0.14em; text-align: center; padding-bottom: 6px; }
+.f1-slot { flex: 1; border-radius: 12px; border: 2px dashed rgba(141,151,181,0.35); background: rgba(141,151,181,0.04); }
+.f1-stamp { position: absolute; left: 1060px; top: 380px; padding: 18px 40px; border: 8px solid #FF3B3B; border-radius: 18px; color: #FF3B3B;
+  font: 700 92px "Space Grotesk", sans-serif; letter-spacing: 0.04em; white-space: nowrap; background: rgba(6,11,30,0.6); opacity: 0; }
+/* scene C — stars */
+.f1-stars { position: absolute; left: 930px; top: 300px; width: 900px; display: flex; justify-content: space-between; }
+.f1-bs { position: relative; width: 160px; height: 160px; }
+.f1-bs svg { position: absolute; inset: 0; width: 160px; height: 160px; display: block; }
+.f1-bsg { position: absolute; inset: 0; filter: drop-shadow(0 0 30px rgba(251,191,36,0.7)); }
+.f1-zero { position: absolute; left: 930px; top: 520px; width: 900px; text-align: center; font: 700 40px "Space Grotesk", sans-serif;
+  letter-spacing: 0.12em; color: #FF3B3B; }
+/* scene D — the gap */
+.f1-gap { font-size: 190px; left: 0; right: 0; top: 330px; text-align: center; }
+.f1-gap span, .f1-gap strong { left: 0; right: 0; }
+.f1-lost { font-size: 100px; left: 0; right: 0; top: 210px; text-align: center; }
+.f1-lost span, .f1-lost strong { left: 0; right: 0; }
+.f1-cust { position: absolute; left: 370px; top: 470px; width: 320px; text-align: center; }
+.f1-cdisc { width: 170px; height: 170px; margin: 0 auto; border-radius: 50%; background: #2EA8FF; padding: 34px;
+  box-shadow: 0 0 0 12px rgba(46,168,255,0.18), 0 0 80px rgba(46,168,255,0.8); }
+.f1-cdisc svg { width: 100%; height: 100%; display: block; }
+.f1-cl, .f1-sl { white-space: nowrap; margin-top: 22px; font: 700 30px "Space Grotesk", sans-serif; letter-spacing: 0.16em; }
+.f1-store { position: absolute; left: 1250px; top: 450px; width: 260px; text-align: center; }
+.f1-store svg { width: 210px; height: 190px; display: block; margin: 0 auto; filter: drop-shadow(0 0 30px rgba(255,59,59,0.7)); }
+.f1-sl { color: #FF3B3B; }
+.f1-path { position: absolute; left: 650px; top: 548px; width: 600px; height: 20px; }
+.f1-flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+.f1-rflash { position: absolute; inset: 0; background: #FF3B3B; opacity: 0; mix-blend-mode: screen; }
+
+.f1-big { font-size: 180px; left: 70px; }
+#f1-w1a, #f1-w2a, #f1-w3a { top: 250px; }
+#f1-w1b, #f1-w2b, #f1-w3b { top: 440px; }
+#f1-w2b { font-size: 140px; top: 450px; }
+#f1-w3b { font-size: 160px; top: 445px; }
+.f1-phone { left: 315px; top: 720px; width: 450px; height: 770px; }
+.f1-count { left: 700px; top: 680px; }
+.f1-calwrap { left: 90px; top: 760px; width: 900px; height: 720px; }
+.f1-stamp { left: 230px; top: 1040px; }
+.f1-stars { left: 130px; top: 900px; width: 820px; }
+.f1-bs, .f1-bs svg { width: 136px !important; height: 136px !important; }
+.f1-zero { left: 90px; top: 1130px; width: 900px; }
+.f1-gap { font-size: 170px; top: 520px; }
+.f1-lost { font-size: 68px; top: 430px; }
+.f1-cust { left: 50px; top: 900px; width: 260px; }
+.f1-cdisc { width: 150px; height: 150px; padding: 30px; }
+.f1-store { left: 720px; top: 880px; }
+.f1-path { left: 300px; top: 968px; width: 430px; }
+.f1-alarm { background: radial-gradient(ellipse 80% 45% at 50% 60%, rgba(255,59,59,0.42), rgba(255,59,59,0) 70%); }
+
+  </style>
+  <div id="root" data-composition-id="01-hook" data-width="1080" data-height="1920" data-duration="7.95">
+    <div id="f1-bg" class="clip f1-bg" data-start="0" data-duration="7.95" data-track-index="0"><div class="f1-grid"></div></div>
+    <div id="f1-stage" class="clip f1-stage" data-start="0" data-duration="7.95" data-track-index="1">
+      <div class="f1-cam">
+
+        <div class="f1-frame"><div class="f1-rig" id="f1-rig"><div class="f1-punch" id="f1-punch">
+          <div class="f1-alarm" id="f1-alarm"></div>
+          <div class="f1-sc" id="f1-sa">
+            <div class="f1-phone" id="f1-phone"><div class="f1-time">9:41</div><div class="f1-date">Monday, slow week</div><div class="f1-stack"><div class="f1-nt" id="f1-nt0"><div class="f1-nic"><svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"><path d="M18 8 h9 l5 13 -7 5 c3 7 8 12 15 15 l5 -7 13 5 v9 c0 4 -3 7 -7 7 C29 55 9 35 9 15 c0 -4 3 -7 9 -7 z"/></svg></div><div class="f1-ntx"><div class="f1-nh">Missed call</div><div class="f1-ns">(480) 555-0142</div></div><div class="f1-nw">now</div></div><div class="f1-nt" id="f1-nt1"><div class="f1-nic"><svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"><path d="M18 8 h9 l5 13 -7 5 c3 7 8 12 15 15 l5 -7 13 5 v9 c0 4 -3 7 -7 7 C29 55 9 35 9 15 c0 -4 3 -7 9 -7 z"/></svg></div><div class="f1-ntx"><div class="f1-nh">Missed call</div><div class="f1-ns">(602) 555-0199</div></div><div class="f1-nw">now</div></div><div class="f1-nt" id="f1-nt2"><div class="f1-nic"><svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"><path d="M18 8 h9 l5 13 -7 5 c3 7 8 12 15 15 l5 -7 13 5 v9 c0 4 -3 7 -7 7 C29 55 9 35 9 15 c0 -4 3 -7 9 -7 z"/></svg></div><div class="f1-ntx"><div class="f1-nh">Missed call</div><div class="f1-ns">Unknown caller</div></div><div class="f1-nw">now</div></div><div class="f1-nt" id="f1-nt3"><div class="f1-nic"><svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"><path d="M18 8 h9 l5 13 -7 5 c3 7 8 12 15 15 l5 -7 13 5 v9 c0 4 -3 7 -7 7 C29 55 9 35 9 15 c0 -4 3 -7 9 -7 z"/></svg></div><div class="f1-ntx"><div class="f1-nh">Voicemail</div><div class="f1-ns">New voicemail · 0:42</div></div><div class="f1-nw">now</div></div><div class="f1-nt" id="f1-nt4"><div class="f1-nic"><svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"><path d="M18 8 h9 l5 13 -7 5 c3 7 8 12 15 15 l5 -7 13 5 v9 c0 4 -3 7 -7 7 C29 55 9 35 9 15 c0 -4 3 -7 9 -7 z"/></svg></div><div class="f1-ntx"><div class="f1-nh">Missed call</div><div class="f1-ns">(623) 555-0117</div></div><div class="f1-nw">now</div></div><div class="f1-nt" id="f1-nt5"><div class="f1-nic"><svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"><path d="M18 8 h9 l5 13 -7 5 c3 7 8 12 15 15 l5 -7 13 5 v9 c0 4 -3 7 -7 7 C29 55 9 35 9 15 c0 -4 3 -7 9 -7 z"/></svg></div><div class="f1-ntx"><div class="f1-nh">Missed call</div><div class="f1-ns">(480) 555-0170</div></div><div class="f1-nw">now</div></div><div class="f1-nt" id="f1-nt6"><div class="f1-nic"><svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"><path d="M18 8 h9 l5 13 -7 5 c3 7 8 12 15 15 l5 -7 13 5 v9 c0 4 -3 7 -7 7 C29 55 9 35 9 15 c0 -4 3 -7 9 -7 z"/></svg></div><div class="f1-ntx"><div class="f1-nh">Missed call</div><div class="f1-ns">(602) 555-0188</div></div><div class="f1-nw">now</div></div></div></div>
+            <div class="f1-count" id="f1-count"><span id="f1-cnum">1</span></div>
+            <div class="f1-gw f1-big" data-layout-allow-overlap id="f1-w1a"><span class="f1-gr">Missed</span><span class="f1-gc">Missed</span><strong>Missed</strong></div>
+            <div class="f1-gw f1-big f1-red" data-layout-allow-overlap id="f1-w1b"><span class="f1-gr">calls.</span><span class="f1-gc">calls.</span><strong>calls.</strong></div>
+          </div>
+          <div class="f1-sc" id="f1-sb">
+            <div class="f1-calwrap"><div class="f1-cal" id="f1-cal"><div class="f1-day"><div class="f1-dh">MON</div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div></div><div class="f1-day"><div class="f1-dh">TUE</div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div></div><div class="f1-day"><div class="f1-dh">WED</div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div></div><div class="f1-day"><div class="f1-dh">THU</div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div></div><div class="f1-day"><div class="f1-dh">FRI</div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div><div class="f1-slot"></div></div></div></div>
+            <div class="f1-stamp" id="f1-stamp">0 BOOKINGS</div>
+            <div class="f1-gw f1-big" data-layout-allow-overlap id="f1-w2a"><span class="f1-gr">Quiet</span><span class="f1-gc">Quiet</span><strong>Quiet</strong></div>
+            <div class="f1-gw f1-big f1-red" data-layout-allow-overlap id="f1-w2b"><span class="f1-gr">calendar.</span><span class="f1-gc">calendar.</span><strong>calendar.</strong></div>
+          </div>
+          <div class="f1-sc" id="f1-sc3">
+            <div class="f1-stars"><div class="f1-bs"><svg viewBox="0 0 64 64" fill="none" stroke="#4B5675" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><div class="f1-bsg"><svg viewBox="0 0 64 64" fill="#FBBF24" stroke="#FBBF24" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg></div></div><div class="f1-bs"><svg viewBox="0 0 64 64" fill="none" stroke="#4B5675" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><div class="f1-bsg"><svg viewBox="0 0 64 64" fill="#FBBF24" stroke="#FBBF24" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg></div></div><div class="f1-bs"><svg viewBox="0 0 64 64" fill="none" stroke="#4B5675" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><div class="f1-bsg"><svg viewBox="0 0 64 64" fill="#FBBF24" stroke="#FBBF24" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg></div></div><div class="f1-bs"><svg viewBox="0 0 64 64" fill="none" stroke="#4B5675" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><div class="f1-bsg"><svg viewBox="0 0 64 64" fill="#FBBF24" stroke="#FBBF24" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg></div></div><div class="f1-bs"><svg viewBox="0 0 64 64" fill="none" stroke="#4B5675" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg><div class="f1-bsg"><svg viewBox="0 0 64 64" fill="#FBBF24" stroke="#FBBF24" stroke-width="4" stroke-linejoin="round"><path d="M32 7 L39.6 23.4 57 25.3 44 37.4 47.6 55 32 46.2 16.4 55 20 37.4 7 25.3 24.4 23.4 Z"/></svg></div></div></div>
+            <div class="f1-zero" id="f1-zero">0 NEW REVIEWS THIS MONTH</div>
+            <div class="f1-gw f1-big" data-layout-allow-overlap id="f1-w3a"><span class="f1-gr">No new</span><span class="f1-gc">No new</span><strong>No new</strong></div>
+            <div class="f1-gw f1-big f1-red" data-layout-allow-overlap id="f1-w3b"><span class="f1-gr">reviews.</span><span class="f1-gc">reviews.</span><strong>reviews.</strong></div>
+          </div>
+          <div class="f1-sc" id="f1-sd">
+            <div class="f1-gw f1-gap" data-layout-allow-overlap id="f1-gapw"><span class="f1-gr">Every gap</span><span class="f1-gc">Every gap</span><strong>Every gap</strong></div>
+            <div class="f1-gw f1-lost f1-red" data-layout-allow-overlap id="f1-lostw"><span class="f1-gr">Lost to your competitor</span><span class="f1-gc">Lost to your competitor</span><strong>Lost to your competitor</strong></div>
+            <svg class="f1-path" viewBox="0 0 600 20"><path id="f1-pl" d="M10 10 H590" stroke="#FF3B3B" stroke-width="6" stroke-dasharray="18 14" fill="none"/></svg>
+            <div class="f1-cust" id="f1-cust"><div class="f1-cdisc"><svg viewBox="0 0 64 64" fill="#fff"><circle cx="32" cy="21" r="11"/><path d="M12 56 c0 -13 9 -21 20 -21 s20 8 20 21 z"/></svg></div><div class="f1-cl" id="f1-cl">A CUSTOMER</div></div>
+            <div class="f1-store" id="f1-store"><svg viewBox="0 0 150 120" fill="none" stroke="#FF3B3B" stroke-width="6" stroke-linejoin="round"><path d="M12 40 L24 10 H126 L138 40 Z"/><path d="M20 40 V112 H130 V40"/><rect x="58" y="66" width="34" height="46"/></svg><div class="f1-sl">COMPETITOR</div></div>
+          </div>
+        </div></div></div>
+        <div class="f1-rflash" id="f1-rflash"></div>
+        <div class="f1-flash" id="f1-flash"></div>
+
+      </div>
+    </div>
+  </div>
+  <script src="assets/vendor/gsap.min.js"></script><script src="assets/vendor/camera-shake.js"></script>
+  <script>
+  (function () {
+  const DUR = 7.95;
+  const tl = gsap.timeline({ paused: true });
+  function pulse(sel, vars0, vars1, at, d) { tl.fromTo(sel, vars0, Object.assign({ duration: d, ease: "power2.out", immediateRender: false }, vars1), at); tl.fromTo(sel, vars1, Object.assign({ duration: d, ease: "power2.in", immediateRender: false }, vars0), at + d); }
+
+  const hidden = { opacity: 0 };
+  // ---- helpers ------------------------------------------------------------
+  // Impact: white flash + scale punch on the inner wrapper (the rig belongs to camera-shake).
+  function impact(at, strength) {
+    if (at > 0) tl.fromTo("#f1-flash", { opacity: 0.5 * strength }, { opacity: 0, duration: 0.16, ease: "power2.out", immediateRender: false }, at);
+    tl.fromTo("#f1-punch", { scale: 1 + 0.06 * strength }, { scale: 1, duration: 0.45, ease: "expo.out", immediateRender: false }, at);
+  }
+  // Slam a glitch word in: oversized + blurred → crisp, then an RGB tear burst.
+  const TEAR = [[-14, 12], [9, -16], [-6, 7], [16, -9], [-3, 4], [0, 0]];
+  function slam(sel, at) {
+    tl.fromTo(sel, { opacity: 0, scale: 1.6, filter: "blur(18px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out", immediateRender: false }, at);
+    TEAR.forEach((o, i) => {
+      tl.set(sel + " .f1-gr", { x: o[0] * 1.6, y: i % 2 ? 3 : -3 }, at + 0.05 + i * 0.045);
+      tl.set(sel + " .f1-gc", { x: o[1] * 1.6, y: i % 2 ? -3 : 3 }, at + 0.05 + i * 0.045);
+    });
+  }
+  // Whip: outgoing scene smears left, incoming scene smears in from the right.
+  function whip(outSel, inSel, at) {
+    tl.fromTo(outSel, { x: 0, filter: "blur(0px)", opacity: 1 }, { x: -420, filter: "blur(26px)", opacity: 0, duration: 0.16, ease: "power2.in", immediateRender: false }, at);
+    tl.fromTo(inSel, { x: 420, filter: "blur(26px)", opacity: 0 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: 0.22, ease: "power3.out", immediateRender: false }, at + 0.12);
+  }
+  // Seek-safe number driver (property setter, like the camera-shake registry helper).
+  function countTo(sel, from, to, at, dur, fmt) {
+    const el = document.querySelector(sel); let v = from; const d = {};
+    Object.defineProperty(d, "v", { get: () => v, set: (n) => { v = n; el.textContent = fmt(n); } });
+    tl.fromTo(d, { v: from }, { v: to, duration: dur, ease: "power1.in" }, at);
+  }
+
+  tl.set("#f1-sb, #f1-sc3, #f1-sd", hidden, 0);
+  tl.set("#f1-w1b, #f1-w2a, #f1-w2b, #f1-w3a, #f1-w3b, #f1-gapw, #f1-lostw", hidden, 0);
+
+  // ---- camera: strong handheld for the whole frame --------------------------
+  window.cameraShake(tl, "#f1-rig", { profile: "handheld-normal-strong", intensity: 0.3, frequency: 1.4, rotation: false, duration: DUR });
+
+  // ---- Scene A (0–1.42): missed calls ----------------------------------------
+  tl.fromTo("#f1-phone", { y: 120, rotation: 5, opacity: 0.7 }, { y: 0, rotation: -3, opacity: 1, duration: 0.5, ease: "expo.out" }, 0);
+  tl.fromTo("#f1-alarm", { opacity: 0 }, { opacity: 1, duration: 0.1 }, 0);
+  impact(0.0, 1);
+  tl.fromTo("#f1-w1a", { opacity: 0.75, scale: 1.25, filter: "blur(6px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.3, ease: "expo.out" }, 0);
+  TEAR.forEach((o, i) => { tl.set("#f1-w1a .f1-gr", { x: o[0] * 1.6 }, i * 0.045); tl.set("#f1-w1a .f1-gc", { x: o[1] * 1.6 }, i * 0.045); });
+  impact(0.48, 0.8);
+  slam("#f1-w1b", 0.48);
+  // notifications pile up, accelerating; each new card pushes the stack down
+  const ARR = [0.12, 0.42, 0.66, 0.85, 1.0, 1.12, 1.22];
+  ARR.forEach((t, i) => {
+    tl.fromTo("#f1-nt" + i, { y: -110, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.18, ease: "back.out(1.6)" }, t);
+    for (let j = 0; j < i; j++) {
+      tl.to("#f1-nt" + j, { y: (i - j) * 78, scale: 1 - (i - j) * 0.03, opacity: 1 - (i - j) * 0.1, duration: 0.18, ease: "power3.out" }, t);
+    }
+  });
+  tl.fromTo("#f1-count", { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(2.5)" }, 0.15);
+  countTo("#f1-cnum", 1, 12, 0.15, 1.15, (n) => String(Math.round(n)));
+  tl.fromTo("#f1-alarm", { opacity: 1 }, { opacity: 0.55, duration: 0.2, immediateRender: false }, 0.2);
+  tl.fromTo("#f1-alarm", { opacity: 1 }, { opacity: 0.55, duration: 0.2, immediateRender: false }, 0.68);
+
+  // ---- Scene B (1.42–2.92): quiet calendar ------------------------------------
+  whip("#f1-sa", "#f1-sb", 1.34);
+  slam("#f1-w2a", 1.46);
+  slam("#f1-w2b", 1.98);
+  tl.fromTo("#f1-cal", { rotationX: 38, rotationY: -14, scale: 0.92 }, { rotationX: 22, rotationY: -8, scale: 1.06, duration: 1.6, ease: "power1.out" }, 1.4);
+  tl.fromTo(".f1-slot", { opacity: 0 }, { opacity: 1, duration: 0.2, stagger: 0.012 }, 1.48);
+  tl.set("#f1-alarm", { opacity: 0.2 }, 1.42);
+  tl.fromTo("#f1-stamp", { opacity: 0, scale: 2.6, rotation: -2 }, { opacity: 1, scale: 1, rotation: -9, duration: 0.24, ease: "power4.in", immediateRender: false }, 2.3);
+  impact(2.54, 0.7);
+  tl.fromTo("#f1-alarm", { opacity: 0.9 }, { opacity: 0.35, duration: 0.4, immediateRender: false }, 2.54);
+
+  // ---- Scene C (2.92–5.05): no new reviews ------------------------------------
+  whip("#f1-sb", "#f1-sc3", 2.86);
+  slam("#f1-w3a", 2.98);
+  slam("#f1-w3b", 3.4);
+  tl.fromTo(".f1-bs", { y: -60, opacity: 0, rotation: -20 }, { y: 0, opacity: 1, rotation: 0, duration: 0.4, stagger: 0.06, ease: "back.out(1.8)" }, 3.0);
+  // on "never come": the gold drains out of each star and it drops
+  tl.fromTo(".f1-bsg", { opacity: 1 }, { opacity: 0, duration: 0.12, stagger: 0.14, immediateRender: false }, 3.85);
+  tl.to(".f1-bs", { y: 34, rotation: (i) => (i % 2 ? 9 : -9), duration: 0.35, stagger: 0.14, ease: "power2.in" }, 3.85);
+  tl.fromTo("#f1-zero", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 4.55);
+  impact(4.58, 0.5);
+
+  // ---- Scene D (5.05–7.95): every gap = a customer lost ------------------------
+  tl.fromTo("#f1-sc3", { opacity: 1, scale: 1 }, { opacity: 0, scale: 1.25, filter: "blur(20px)", duration: 0.14, ease: "power2.in", immediateRender: false }, 5.0);
+  tl.set("#f1-sd", { opacity: 1 }, 5.1);
+  tl.set("#f1-alarm", { opacity: 0 }, 5.1);
+  impact(5.12, 1);
+  slam("#f1-gapw", 5.12);
+  tl.to("#f1-gapw", { y: -130, scale: 0.6, duration: 0.5, ease: "power3.inOut" }, 5.75);
+  tl.fromTo("#f1-cust", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2)" }, 6.0);
+  tl.fromTo("#f1-store", { x: 160, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 6.5);
+  tl.fromTo("#f1-pl", { strokeDashoffset: 600, opacity: 0 }, { strokeDashoffset: 0, opacity: 1, duration: 0.4, ease: "none" }, 6.55);
+  tl.to("#f1-cl", { opacity: 0, duration: 0.15 }, 6.85);
+  tl.to("#f1-cust", { x: 700, scale: 0.35, duration: 0.5, ease: "power3.in" }, 6.85);
+  tl.to("#f1-cust", { opacity: 0, duration: 0.08 }, 7.33);
+  tl.set("#f1-gapw", { opacity: 0 }, 7.3);
+  slam("#f1-lostw", 7.3);
+  tl.fromTo("#f1-rflash", { opacity: 0.7 }, { opacity: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, 7.3);
+  tl.fromTo("#f1-store", { scale: 1.25 }, { scale: 1, duration: 0.4, ease: "expo.out", immediateRender: false }, 7.32);
+  tl.fromTo("#f1-alarm", { opacity: 0 }, { opacity: 0.8, duration: 0.3, immediateRender: false }, 7.3);
+  tl.fromTo("#f1-punch", { scale: 1 }, { scale: 1.05, duration: 0.6, ease: "power2.in", immediateRender: false }, 7.35);
+
+  window.__timelines["01-hook"] = tl;
+  })();
+  </script>
+</template>

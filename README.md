@@ -11,6 +11,17 @@ Launch promo for Trainor Media Network's **A.I. Client Acquisition Super Suite**
 
 Everything after the hook (frames 2–9: the Super Suite reveal, the five systems, the CTA and the brand end card) is identical across all four, so the A/B test isolates the hook.
 
+## Finished videos
+
+Full-quality MP4s ready to upload (H.264, audio normalized to about −15 LUFS):
+
+| File | Format | Hook |
+|---|---|---|
+| `final/super-suite-9x16-hook-A.mp4` | 9:16 · Reels / TikTok | A — Missed calls |
+| `final/super-suite-9x16-hook-B.mp4` | 9:16 · Reels / TikTok | B — Will they find you? |
+| `final/super-suite-16x9-hook-A.mp4` | 16:9 · YouTube / web | A — Missed calls |
+| `final/super-suite-16x9-hook-B.mp4` | 16:9 · YouTube / web | B — Will they find you? |
+
 ## Render
 
 ```bash
